@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet  id="1"  author="Anatoliy">
+        <createTable  tableName="Writer">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="firstName"  type="varchar">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="lastName"  type="varchar">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="Post">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="title"  type="varchar">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="content"  type="varchar">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="created"  type="timestamp">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="updated"  type="timestamp">
+            </column>
+            <column  name="status"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="Label">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="Writer_Post">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="Writer_id"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="Post_id"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <createTable  tableName="Post_Label">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="Label_id"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="Post_id"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="Post_id"
+                                 baseTableName="Post_Label"
+                                 constraintName="fk_post_label"
+                                 referencedColumnNames="id"
+                                 referencedTableName="Post"
+                                    onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="Label_id"
+                                 baseTableName="Post_Label"
+                                 constraintName="fk_label_post"
+                                 referencedColumnNames="id"
+                                 referencedTableName="Label"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="Post_id"
+                                 baseTableName="Writer_Post"
+                                 constraintName="fk_post_writer"
+                                 referencedColumnNames="id"
+                                 referencedTableName="Post"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseColumnNames="Writer_id"
+                                 baseTableName="Writer_Post"
+                                 constraintName="fk_writer_post"
+                                 referencedColumnNames="id"
+                                 referencedTableName="Writer"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
