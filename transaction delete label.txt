@@ -1,0 +1,46 @@
+1)
+@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+@JoinTable(
+        name = "Post_Label",
+        joinColumns = {@JoinColumn(name = "Label_id")},
+        inverseJoinColumns = {@JoinColumn(name = "Post_id")})
+@Fetch(FetchMode.SUBSELECT)
+
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.SQL - select l1_0.id,l1_0.created,l1_0.name,l1_0.status,l1_0.updated from Label l1_0 where l1_0.id=?
+2024-мар.-09 15:23:19 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [57]
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - committing
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.SQL - delete from Post_Label where Label_id=?
+2024-мар.-09 15:23:19 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [57]
+2024-мар.-09 15:23:19 PM [main] DEBUG org.hibernate.SQL - delete from Label where id=?
+2024-мар.-09 15:23:19 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [57]
+
+2)
+//    @PreRemove
+//    private void removeLabelsFromPosts() {
+//        for (Post u : posts) {
+//            u.getLabels().remove(this);
+//        }
+//    }
+//}
+
+
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.SQL - select l1_0.id,l1_0.created,l1_0.name,l1_0.status,l1_0.updated from Label l1_0 where l1_0.id=?
+2024-мар.-09 15:26:23 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [56]
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.SQL - select p1_0.Label_id,p1_1.id,p1_1.content,p1_1.created,p1_1.status,p1_1.title,p1_1.updated from Post_Label p1_0 join Post p1_1 on p1_1.id=p1_0.Post_id where p1_0.Label_id=?
+2024-мар.-09 15:26:23 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [56]
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.SQL - select l1_0.Post_id,l1_1.id,l1_1.created,l1_1.name,l1_1.status,l1_1.updated from Post_Label l1_0 join Label l1_1 on l1_1.id=l1_0.Label_id where l1_0.Post_id in (select p1_1.id from Post_Label p1_0 join Post p1_1 on p1_1.id=p1_0.Post_id where p1_0.Label_id=?)
+2024-мар.-09 15:26:23 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [56]
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - committing
+2024-мар.-09 15:26:23 PM [main] DEBUG org.hibernate.SQL - delete from Post_Label where Post_id=?
+2024-мар.-09 15:26:23 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [10]
+2024-мар.-09 15:26:24 PM [main] DEBUG org.hibernate.SQL - delete from Post_Label where Post_id=?
+2024-мар.-09 15:26:24 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [11]
+2024-мар.-09 15:26:24 PM [main] DEBUG org.hibernate.SQL - insert into Post_Label (Post_id,Label_id) values (?,?)
+2024-мар.-09 15:26:24 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [11]
+2024-мар.-09 15:26:24 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:BIGINT) <- [55]
+2024-мар.-09 15:26:24 PM [main] DEBUG org.hibernate.SQL - delete from Label where id=?
+2024-мар.-09 15:26:24 PM [main] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [56]

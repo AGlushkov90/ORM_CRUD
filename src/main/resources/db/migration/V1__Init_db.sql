@@ -44,8 +44,6 @@ CREATE TABLE Post_Label (
   Label_id int NOT NULL,
   Post_id int NOT NULL,
   PRIMARY KEY (Label_id,Post_id),
-  CONSTRAINT Post_Label_fk_1
-   FOREIGN KEY (Post_id) REFERENCES Post (id),
-  CONSTRAINT Post_Label_fk_2
-   FOREIGN KEY (Label_id) REFERENCES Label (id)
+  CONSTRAINT Post_Label_fk_1 FOREIGN KEY (Post_id) REFERENCES Post (id),
+  CONSTRAINT Post_Label_fk_2 FOREIGN KEY (Label_id) REFERENCES Label (id)
 )

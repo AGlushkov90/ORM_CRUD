@@ -1,8 +1,8 @@
 package com.glushkov.ormcrud.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,24 @@ public class Label extends BaseItem {
     private String name;
 
     @ManyToMany(mappedBy = "labels")
+//@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//@JoinTable(
+//        name = "Post_Label",
+//        joinColumns = {@JoinColumn(name = "Label_id")},
+//        inverseJoinColumns = {@JoinColumn(name = "Post_id")})
+//@Fetch(FetchMode.SUBSELECT)
     private List<Post> posts;
+
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+
 
     public Label(Long id, String name) {
         super(id);
@@ -56,5 +73,12 @@ public class Label extends BaseItem {
         return "Label{" + super.toString() +
                 "name='" + name + '\'' +
                 "}\n";
-    }
-}
+    }}
+
+//    @PreRemove
+//    private void removeLabelsFromPosts() {
+//        for (Post u : posts) {
+//            u.getLabels().remove(this);
+//        }
+//    }
+//}

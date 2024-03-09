@@ -13,7 +13,7 @@ public class Writer extends BaseItem {
     private String firstName;
 
     private String lastName;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "Writer_Post",
             joinColumns = {@JoinColumn(name = "Writer_id")},

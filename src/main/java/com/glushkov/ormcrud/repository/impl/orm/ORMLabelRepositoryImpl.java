@@ -1,12 +1,14 @@
 package com.glushkov.ormcrud.repository.impl.orm;
 
 import com.glushkov.ormcrud.model.Label;
+import com.glushkov.ormcrud.model.Post;
 import com.glushkov.ormcrud.repository.LabelRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class ORMLabelRepositoryImpl implements LabelRepository {
 
@@ -38,8 +40,12 @@ public class ORMLabelRepositoryImpl implements LabelRepository {
         Transaction tx = null;
         try (Session session = ORMCommonRepository.getSession()) {
             tx = session.beginTransaction();
-            Label label = session.load(Label.class, id);
-            session.delete(label);
+
+            Label label = session.get(Label.class, id);
+            for (Post u : label.getPosts()) {
+                u.getLabels().remove(label);
+            }
+            session.remove(label);
             tx.commit();
             return true;
         } catch (HibernateException e) {
